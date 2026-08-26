@@ -43,9 +43,6 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Run Background Purge
-        env:
-          AUTH_TOKEN: ${{51c752155f1489e7a36ed3595bb4a68ded7bf42d }}
-          CT0_CSRF: ${{a21abe5bf24a95c8a2f9d2483a8c7001eafbbaf152226c3effa1f61a56d53c51633b820ef80398ba8b122645dcc20d5946cfaa626f28f083e0f23d9cc18ad229fb2024360280a4194ae7172e3a62fa42 }}
         run: |
           python async_purge.py --auto
 
