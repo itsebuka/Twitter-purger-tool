@@ -1,24 +1,35 @@
-# Compiled class file
-*.class
+# Environment & Credentials
+.env
+.env.local
+*.env
 
-# Log file
-*.log
+# Twitter Personal Archives
+tweets.js
+tweet.js
+tweets.json
+purge_progress.json
+*.jsonl
+account.js
+profile.js
 
-# BlueJ files
-*.ctxt
-
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
-# Package Files #
-*.jar
-*.war
-*.nar
-*.ear
+# Ignore any private JS archive dumps (preserve console tool scripts)
+data/
 *.zip
-*.tar.gz
-*.rar
+!scripts.zip
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
-hs_err_pid*
-replay_pid*
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# OS & Logs
+*.log
+.DS_Store
+Thumbs.db
