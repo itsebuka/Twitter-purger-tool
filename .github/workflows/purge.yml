@@ -1,9 +1,18 @@
 name: Twitter 24/7 Cloud Purger
 
 on:
-  workflow_dispatch: # Allows manual one-click trigger from GitHub Actions tab
+  workflow_dispatch: # Allows manual trigger anytime
   schedule:
-    - cron: '0 */3 * * *' # Runs automatically every 3 hours
+    - cron: '0 */3 * * *' # Automatically runs every 3 hours
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - 'purge_progress.json'
+      - 'README.md'
+
+concurrency:
+  group: twitter-cloud-purger
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -11,7 +20,7 @@ permissions:
 jobs:
   run-purger:
     runs-on: ubuntu-latest
-    timeout-minutes: 350 # Max execution time per job (~5.8 hours)
+    timeout-minutes: 350
 
     steps:
       - name: Checkout Repository
@@ -37,7 +46,6 @@ jobs:
         env:
           AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
           CT0_CSRF: ${{ secrets.CT0_CSRF }}
-          CUTOFF_DATE: ${{ secrets.CUTOFF_DATE }}
         run: |
           python async_purge.py --auto
 
@@ -47,5 +55,5 @@ jobs:
           git pull --rebase origin main || true
           if [ -f purge_progress.json ]; then
             git add purge_progress.json
-            git diff --staged --quiet || (git commit -m "chore: auto-save purge progress [skip ci]" && git push origin main)
+            git diff --staged --quiet || (git commit -m "chore: save purge progress [skip ci]" && git push origin main)
           fi

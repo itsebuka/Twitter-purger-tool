@@ -1,21 +1,7 @@
-# Environment & Credentials
+# Environment & Local Credentials (Never committed)
 .env
 .env.local
 *.env
-
-# Twitter Personal Archives
-tweets.js
-tweet.js
-tweets.json
-purge_progress.json
-*.jsonl
-account.js
-profile.js
-
-# Ignore any private JS archive dumps (preserve console tool scripts)
-data/
-*.zip
-!scripts.zip
 
 # Python artifacts
 __pycache__/
@@ -27,7 +13,6 @@ env/
 venv/
 .venv/
 pip-log.txt
-pip-delete-this-directory.txt
 
 # OS & Logs
 *.log
