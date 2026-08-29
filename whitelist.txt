@@ -1,0 +1,13 @@
+# ==============================================================================
+# X (Twitter) Unfollower Protected Whitelist
+# Add handles or user IDs (one per line) that should NEVER be unfollowed.
+# Lines starting with # are comments and will be ignored.
+# ==============================================================================
+
+# Core Designated Handles
+pau_nigeria
+IkejaElectric
+vireontech
+
+# Add any additional accounts, friends, or mentors below:
+# example_handle
