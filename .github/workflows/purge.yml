@@ -1,14 +1,7 @@
-name: Twitter 24/7 Cloud Purger
+name: Twitter 24/7 Cloud Purger (Halted / Manual Only)
 
 on:
-  workflow_dispatch: # Allows manual trigger anytime
-  schedule:
-    - cron: '0 */3 * * *' # Automatically runs every 3 hours
-  push:
-    branches: [ main ]
-    paths-ignore:
-      - 'purge_progress.json'
-      - 'README.md'
+  workflow_dispatch: # Manual only - no automatic schedules
 
 concurrency:
   group: twitter-cloud-purger
@@ -20,37 +13,5 @@ permissions:
 jobs:
   run-purger:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: |
-          pip install -r requirements.txt
-
-      - name: Configure Git for Auto-Commits
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Run Background Purge
-        run: |
-          python async_purge.py --auto
-
-      - name: Save & Push Progress
-        if: always()
-        run: |
-          git pull --rebase origin main || true
-          if [ -f purge_progress.json ]; then
-            git add purge_progress.json
-            git diff --staged --quiet || (git commit -m "chore: save purge progress [skip ci]" && git push origin main)
-          fi
+      - run: echo "Workflow is halted. Manual triggers only."
