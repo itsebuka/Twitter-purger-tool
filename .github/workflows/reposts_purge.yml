@@ -1,0 +1,45 @@
+name: Twitter Reposts Purger (May 2026 - July 2026)
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: twitter-reposts-purger
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  purge-reposts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run Repost Purger Engine
+        run: |
+          python purge_reposts_window.py
+
+      - name: Commit & Save Progress
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add reposts_purge_progress.json || true
+          git commit -m "Auto-save repost purge progress [skip ci]" || echo "No progress changes to commit"
+          git push origin main || echo "No changes to push"
